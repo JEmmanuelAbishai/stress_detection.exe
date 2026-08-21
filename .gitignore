@@ -1,0 +1,49 @@
+# TypeScript
+*.tsbuildinfo
+
+# Node
+node_modules/
+dist/
+build/
+*.local
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+.venv/
+venv/
+
+# Extension packaging
+*.crx
+*.pem
+*.zip
+
+# Python (python-training/)
+python-training/__pycache__/
+python-training/**/__pycache__/
+python-training/**/*.pyc
+python-training/venv/
+python-training/.venv/
+python-training/*.egg-info/
+python-training/data/*.csv
+python-training/data/raw/
+python-training/mlruns/
+
+# Model artifacts are versioned deliberately 
+python-training/checkpoints/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Test artifacts
+coverage/
+playwright-report/
+test-results/
