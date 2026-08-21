@@ -9,3 +9,7 @@ export const MIN_KEYSTROKES = 5;
 
 /** The current content-script session is flushed after this much idle time. */
 export const SESSION_IDLE_MS = 30_000;
+
+export const MIN_KEYSTROKES_FOR_INFERENCE = 10;
+
+export const SESSION_IDLE_TIMEOUT_MS = 30_000;

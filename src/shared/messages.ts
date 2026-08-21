@@ -1,4 +1,4 @@
-import type { DailyReport, TypingSession, UserSettings } from "./types";
+import type { FeatureVector, DailyReport, TypingSession, UserSettings } from "./types";
 
 /** Typed request envelope every surface sends to the background worker. */
 export type RuntimeMessage =
@@ -8,7 +8,10 @@ export type RuntimeMessage =
   | { type: "GET_ALL_SESSIONS" }
   | { type: "ADD_SESSION"; session: TypingSession }
   | { type: "GET_DAILY_REPORTS"; days?: number }
-  | { type: "GET_DOMAIN_BREAKDOWN" };
+  | { type: "GET_DOMAIN_BREAKDOWN" }
+  | { type: "SESSION_STARTED"; sessionId: string; domain: string; tabId: number }
+  | { type: "SESSION_FEATURES_READY"; sessionId: string; domain: string; features: FeatureVector }
+  | { type: "SESSION_ENDED"; sessionId: string };
 
 /** A domain + session count, e.g. for the dashboard's top-domains bar chart. */
 export interface DomainCount {

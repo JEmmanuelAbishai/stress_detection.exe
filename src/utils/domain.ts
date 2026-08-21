@@ -22,3 +22,18 @@ export const SUGGESTED_EXCLUSIONS: string[] = [
 export function normalizeDomain(host: string): string {
   return host.replace(/^www\./, "").toLowerCase();
 }
+
+/** Extracts and normalizes the domain (hostname) from a full URL. */
+export function extractDomain(url: string): string {
+  try {
+    return normalizeDomain(new URL(url).hostname);
+  } catch {
+    return normalizeDomain(url);
+  }
+}
+
+/** True when the normalized domain is an exact match in the exclusion list. */
+export function isExcluded(domain: string, excludedDomains: string[]): boolean {
+  const normalized = normalizeDomain(domain);
+  return excludedDomains.some((d) => normalizeDomain(d) === normalized);
+}

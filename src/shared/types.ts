@@ -77,4 +77,5 @@ export interface DailyReport {
   avgScore: number;
   levelCounts: LevelCounts;
   sessionCount: number;
+  totalKeystrokes: number;
 }
