@@ -1,15 +1,25 @@
-/** A "pause" is any inter-key flight time longer than this (ms). */
-export const PAUSE_THRESHOLD_MS = 500;
+export const SESSION_IDLE_TIMEOUT_MS = 60_000; // end a session after 60s of no keystrokes
+export const PAUSE_THRESHOLD_MS = 2_000; // gap counted as a "pause" for pauseRate
+export const ERROR_BURST_WINDOW_MS = 3_000; // window used to detect rapid-backspace clusters
+export const MIN_KEYSTROKES_FOR_INFERENCE = 20; // don't run the model on tiny samples
 
-/** Two+ backspaces within this window count as one error burst (ms). */
-export const ERROR_BURST_WINDOW_MS = 3000;
+export const STRESS_THRESHOLDS: Record<"low" | "medium" | "high", { steady: number; elevated: number; critical: number }> = {
+  // sensitivity setting shifts thresholds left/right; "high" sensitivity
+  // flags "elevated"/"critical" at lower model scores.
+  low: { steady: 0.35, elevated: 0.6, critical: 0.82 },
+  medium: { steady: 0.28, elevated: 0.5, critical: 0.75 },
+  high: { steady: 0.2, elevated: 0.4, critical: 0.65 }
+};
 
-/** A session needs at least this many keystrokes before it's worth analyzing. */
-export const MIN_KEYSTROKES = 5;
+export const STORAGE_KEYS = {
+  settings: "stress_detector_settings",
+  dbName: "stress-detector-db",
+  dbVersion: 1
+} as const;
 
-/** The current content-script session is flushed after this much idle time. */
-export const SESSION_IDLE_MS = 30_000;
+export const MODEL_URL = "ml/model/stress_model.onnx";
+export const MODEL_META_URL = "ml/model/model_meta.json";
+export const MODEL_VERSION = "2026.07.1";
 
-export const MIN_KEYSTROKES_FOR_INFERENCE = 10;
-
-export const SESSION_IDLE_TIMEOUT_MS = 30_000;
+export const ALARM_AGGREGATE_REPORTS = "aggregate-daily-reports";
+export const ALARM_PRUNE_OLD_SESSIONS = "prune-old-sessions";
