@@ -1,7 +1,7 @@
-export const SESSION_IDLE_TIMEOUT_MS = 60_000; // end a session after 60s of no keystrokes
+export const SESSION_IDLE_TIMEOUT_MS = 4_000; // end a session after 60s of no keystrokes
 export const PAUSE_THRESHOLD_MS = 2_000; // gap counted as a "pause" for pauseRate
 export const ERROR_BURST_WINDOW_MS = 3_000; // window used to detect rapid-backspace clusters
-export const MIN_KEYSTROKES_FOR_INFERENCE = 20; // don't run the model on tiny samples
+export const MIN_KEYSTROKES_FOR_INFERENCE = 8; // don't run the model on tiny samples
 
 export const STRESS_THRESHOLDS: Record<"low" | "medium" | "high", { steady: number; elevated: number; critical: number }> = {
   // sensitivity setting shifts thresholds left/right; "high" sensitivity
