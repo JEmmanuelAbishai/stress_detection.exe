@@ -20,7 +20,7 @@
 
     "types": ["chrome", "vite/client"],
     "baseUrl": ".",
-    "ignoreDeprecations": "5.0",
+    //"ignoreDeprecations": "5.0",
     "paths": {
       "@shared/*": ["src/shared/*"],
       "@utils/*": ["src/utils/*"],
