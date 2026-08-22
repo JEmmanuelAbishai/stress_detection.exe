@@ -1,5 +1,5 @@
 import { FeatureExtractor } from "./featureExtractor";
-import { KeystrokeListener } from "./keyStrokeListener";
+import { KeystrokeListener } from "./keystrokeListener";
 import { MIN_KEYSTROKES_FOR_INFERENCE, SESSION_IDLE_TIMEOUT_MS } from "@shared/constants";
 import { extractDomain, isExcluded } from "@utils/domain";
 import { createLogger } from "@utils/logger";

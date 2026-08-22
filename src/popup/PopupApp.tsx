@@ -16,7 +16,11 @@ export function PopupApp() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    void loadData();
+    const listener = (message: { type: string }) => {
+      if (message.type === "PREDICTION_READY") void loadData();
+    };
+    chrome.runtime.onMessage.addListener(listener);
+    return () => chrome.runtime.onMessage.removeListener(listener);
   }, []);
 
   async function loadData() {
