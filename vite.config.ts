@@ -38,12 +38,12 @@ export default defineConfig({
         dashboard: resolve(__dirname, "src/dashboard/dashboard.html"),
         settings: resolve(__dirname, "src/settings/settings.html"),
         background: resolve(__dirname, "src/background/index.ts"),
-        content: resolve(__dirname, "src/content/index.ts")
+        
       },
       output: {
         // Keep top-level scripts unhashed so manifest.json paths stay valid.
         entryFileNames: (chunk) => {
-          if (chunk.name === "background" || chunk.name === "content") {
+          if (chunk.name === "background") {
             return "[name].js";
           }
           return "assets/[name]-[hash].js";
