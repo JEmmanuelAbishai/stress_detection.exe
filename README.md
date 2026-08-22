@@ -1,93 +1,101 @@
+<div align="center">
+
 # Typing Stress Detector
 
-A Chrome extension that estimates typing-behavior stress signals (dwell
-time, flight time, backspace rate, pauses) entirely **on-device**, and shows
-trends in a private popup + dashboard. Built with React, TypeScript,
-TailwindCSS, and a small Python/scikit-learn/ONNX model that runs client-side
-via `onnxruntime-web`.
+**AI-powered stress monitoring for browsers using real-time typing dynamics & local ML inference**
 
-See `docs/privacy.md` before running this on your own machine — it explains
-exactly what is and isn't captured.
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.5-3178C6?logo=typescript&logoColor=white)](https://typescriptlang.org)
+[![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=white)](https://react.dev)
+[![ONNX Runtime](https://img.shields.io/badge/ONNX-Runtime-black?logo=onnx&logoColor=white)](https://onnxruntime.ai)
+[![License](https://img.shields.io/github/license/JEmmanuelAbishai/stress-detection-crx)](https://github.com/JEmmanuelAbishai/stress-detection-crx/blob/develop/LICENSE)
 
-## Stack
+</div>
 
-- **Extension**: Manifest V3, React 18, TypeScript, TailwindCSS, Vite
-- **ML runtime**: ONNX Runtime Web (WASM) — inference happens fully
-  client-side, no server round-trip
-- **ML training**: Python, scikit-learn, `skl2onnx` (see `python-training/`)
-- **Storage**: IndexedDB (sessions/reports) + `chrome.storage.local`
-  (settings)
+## Overview
 
-## Project layout
+A privacy-first Chrome Extension that estimates typing-behavior stress signals (dwell time, flight time, backspace rate, pauses) entirely **on-device**. By running a lightweight logistic regression model locally via `onnxruntime-web`, the extension provides private, real-time stress trends without external data transmission.
 
+**Domain:** Human-Computer Interaction & Applied ML  
+**Framework:** Chrome Extension Manifest V3, React, ONNX Runtime  
+**Status:** Active Development
+
+---
+
+## System Architecture
+
+The architecture bridges web-based user interaction with local machine learning inference, ensuring full data privacy.
+
+```mermaid
+classDiagram
+    class ContentScript {
+        +KeyStrokeListener listener
+        +FeatureExtractor extractor
+        +sendMetrics()
+    }
+    class BackgroundService {
+        +MessageRouter router
+        +AlarmManager alarms
+    }
+    class InferenceEngine {
+        +ModelLoader loader
+        +runInference(features)
+    }
+    class Storage {
+        +IndexedDB db
+        +saveSession()
+        +getAnalytics()
+    }
+
+    ContentScript ..> BackgroundService : sends metrics
+    BackgroundService --> InferenceEngine : triggers
+    BackgroundService --> Storage : persists
 ```
-manifest.json, vite.config.ts, tailwind.config.js  — extension + build config
-src/popup/        — toolbar popup (quick glance + trend sparkline)
-src/dashboard/     — full trends dashboard (charts, exports)
-src/settings/      — preferences (sensitivity, exclusions, retention)
-src/background/    — service worker: message router, alarms, notifications
-src/content/       — per-page keystroke listener + feature extraction
-src/ml/            — ONNX model loading + inference
-src/storage/       — IndexedDB + chrome.storage repositories
-src/reports/       — daily report aggregation + CSV/PDF export
-src/shared/        — cross-cutting types, message protocol, constants
-src/utils/         — time/logging/domain helpers
-python-training/    — standalone Python pipeline that produces the ONNX model
-docs/               — architecture, message protocol, privacy
-tests/              — unit (vitest), integration (vitest + chrome mocks), e2e (playwright)
+
+---
+
+## ML Pipeline
+
+The model is trained in a standalone Python environment and exported to ONNX for browser execution.
+
+```mermaid
+graph LR
+    A[Data Collection] --> B[preprocess.py]
+    B --> C[train.py]
+    C --> D[export_to_onnx.py]
+    D --> E[src/ml/model/stress_model.onnx]
+  
 ```
 
-See `docs/architecture.md` for the full data-flow diagram and
-`docs/message-protocol.md` for the typed message contract every surface uses
-to talk to the background service worker.
+---
 
-## Getting started
+## Features
+
+- **Privacy First**: All inference runs locally in the browser via WASM; no data leaves your machine.
+- **Real-time Analytics**: Built-in Dashboard with `Chart.js` visualization of stress trends.
+- **Flexible Reporting**: Export daily session data to CSV or PDF for personal record-keeping.
+- **Explainability**: Dashboard shows top contributing features, helping users understand *why* the model detected stress.
+
+## Getting Started
 
 ```bash
+# Install dependencies
 npm install
-npm run build          # outputs the loadable extension to dist/
+
+# Build the extension
+npm run build
 ```
 
-Then in Chrome: `chrome://extensions` → enable Developer mode → **Load
-unpacked** → select the `dist/` folder.
+1. Open Chrome → `chrome://extensions`.
+2. Enable **Developer mode**.
+3. Click **Load unpacked** and select the `/dist` folder generated from the build.
 
-For active development:
+## Authors & Contributors
 
-```bash
-npm run dev             # rebuilds on change; reload the extension in Chrome after each build
+| Name | Role | Key Contribution |
+| :--- | :--- | :--- |
+| [JEmmanuelAbishai](https://github.com/JEmmanuelAbishai) | Lead Developer / UI Designer | Core architecture, ML engine integration, and project oversight. |
+| [saipradeep368](https://github.com/saipradeep368) | Fullstack Engineer | Connected all the modules with background routing logic. |
+| [Arvind-Parsapuram](https://github.com/Arvind-Parsapuram) | ML Engineer | 	Trained the stress-classification model and converted it to run efficiently in-browser. |
+| [vedavyasa30](https://github.com/vedavyasa30) | Typing Engine Developer | Built the core keystroke-capture system, listening for typing activity. |
+| [chembetimuniteja](https://github.com/chembetimuniteja) | Reporting Engineer | Documentation and support maintenance. |
 ```
-
-### Retraining the model
-
-The shipped `src/ml/model/stress_model.onnx` is trained on a synthetic
-dataset (see `python-training/preprocess.py`) so the pipeline is runnable
-without any real user data. To retrain:
-
-```bash
-cd python-training
-python -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
-python preprocess.py
-python train.py --data data/typing_sessions.csv
-python export_to_onnx.py   # writes into ../src/ml/model/
-```
-
-## Testing
-
-```bash
-npm run test             # unit + integration (vitest)
-npm run build && npm run test:e2e   # e2e (playwright, requires a built dist/)
-```
-
-## Team workflow
-
-This repo is organized around five branches feeding into `develop`:
-`ui`, `typing-engine`, `ml-model`, `storage-services`, plus whoever's doing
-full-stack/background + build work directly on `develop`. See
-`docs/architecture.md#team--code-ownership-mapping` for which folders map to
-which branch, and treat `src/shared/` as commonly-owned — changes there
-should be reviewed by whoever depends on them before merging to `develop`.
-
-## License
-
-See `LICENSE`.
