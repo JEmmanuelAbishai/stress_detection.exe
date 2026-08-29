@@ -5,5 +5,23 @@
 @layer base {
   body {
     margin: 0;
+    background-color: #000;
+    background-image: theme('backgroundImage.scanlines');
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded-lg bg-black/60 p-5 ring-1 ring-cyan/30 backdrop-blur-sm;
+    box-shadow: 0 0 12px rgba(85, 234, 212, 0.15), inset 0 0 20px rgba(0,0,0,0.6);
+  }
+
+  .neon-text {
+    text-shadow: 0 0 4px currentColor, 0 0 12px currentColor;
+  }
+
+  .neon-border {
+    @apply border border-cyan/50;
+    box-shadow: 0 0 8px rgba(85, 234, 212, 0.4);
   }
 }
