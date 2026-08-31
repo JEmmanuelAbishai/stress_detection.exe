@@ -140,7 +140,7 @@ async function handle(
 function notifyElevatedStress(level: "elevated" | "critical"): void {
   chrome.notifications.create({
     type: "basic",
-    iconUrl: "icons/icon48.png",
+    iconUrl: "icons/icon44.png",
     title: level === "critical" ? "Stress signals look high" : "Stress signals rising",
     message: "Your recent typing patterns suggest it might be a good time for a short break.",
     priority: level === "critical" ? 2 : 1
