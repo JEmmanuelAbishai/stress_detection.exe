@@ -5,6 +5,7 @@ import { toDateKey, daysAgo } from "@utils/time";
 import { getReportsInRange } from "@reports/reportBuilder";
 import { longestCalmStreak, sessionsByDomain, summarizeReports } from "./analytics";
 import { DomainBarChart, LevelBreakdownChart, StressTrendChart } from "./charts";
+import { STRESS_LEVEL_LABELS } from "@shared/constants";
 
 const RANGE_DAYS = 14;
 
@@ -109,7 +110,7 @@ return (
 
           <section className="card">
             <h2 className="mb-1 font-display text-sm font-semibold">Most common level this period</h2>
-            <p className="text-sm text-slate-500 capitalize">{summary.mostCommonLevel}</p>
+            <p className="text-sm text-cyan/70">{STRESS_LEVEL_LABELS[summary.mostCommonLevel]}</p>
           </section>
         </>
       )}
