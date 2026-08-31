@@ -2,7 +2,7 @@
 
 # Typing Stress Detector
 
-**AI-powered stress monitoring for browsers using real-time typing dynamics & local ML inference**
+**AI-powered stress monitoring for browsers using real-time typing dynamics & local ML inference | Inspired by Cyberpunk 2077**
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.5-3178C6?logo=typescript&logoColor=white)](https://typescriptlang.org)
 [![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=white)](https://react.dev)
@@ -10,6 +10,24 @@
 [![License](https://img.shields.io/github/license/JEmmanuelAbishai/stress-detection-crx)](https://github.com/JEmmanuelAbishai/stress-detection-crx/blob/develop/LICENSE)
 
 </div>
+
+---
+
+## Demo
+
+<div align="center">
+
+![Popup Screen](public/demo/demo1.png)
+<div> The main popup screen of the extension </div>
+
+<br> <br>
+
+![Dashboard Screen](public/demo/demo2.png)
+<div> Dashboard which shows typing analytics </div>
+
+</div>
+
+---
 
 ## Overview
 
