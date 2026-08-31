@@ -23,3 +23,17 @@ export const MODEL_VERSION = "2026.07.1";
 
 export const ALARM_AGGREGATE_REPORTS = "aggregate-daily-reports";
 export const ALARM_PRUNE_OLD_SESSIONS = "prune-old-sessions";
+
+export const STRESS_LEVEL_LABELS: Record<import("./types").StressLevel, string> = {
+  calm: "CALM",
+  steady: "NOMINAL",
+  elevated: "OVERCLOCKED",
+  critical: "CYBERPSYCHO"
+};
+
+export const STRESS_LEVEL_MESSAGES: Record<import("./types").StressLevel, string> = {
+  calm: "Signal's clean. Nothing to report, choom.",
+  steady: "Baseline holding. Keep an eye on it.",
+  elevated: "Might as well take a break.",
+  critical: "You're goin cyberpsycho choom. Get off now"
+};

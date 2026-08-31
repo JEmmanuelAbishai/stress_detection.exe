@@ -5,6 +5,7 @@ import { toDateKey, daysAgo } from "@utils/time";
 import { getReportsInRange } from "@reports/reportBuilder";
 import { longestCalmStreak, sessionsByDomain, summarizeReports } from "./analytics";
 import { DomainBarChart, LevelBreakdownChart, StressTrendChart } from "./charts";
+import { STRESS_LEVEL_LABELS } from "@shared/constants";
 
 const RANGE_DAYS = 14;
 
@@ -46,28 +47,32 @@ export function DashboardApp() {
     await sendMessage({ type: "REQUEST_EXPORT", format, range: { from, to } });
   }
 
-  return (
-    <div className="mx-auto max-w-5xl px-6 py-8">
-      <header className="mb-8 flex items-center justify-between">
-        <div>
-          <h1 className="font-display text-2xl font-semibold">Your typing stress trends</h1>
-          <p className="text-sm text-slate-400">Last {RANGE_DAYS} days · all analysis stays on this device</p>
-        </div>
-        <div className="flex gap-2">
-          <button
-            onClick={() => handleExport("csv")}
-            className="rounded-lg border border-slate-100 bg-white px-3 py-2 text-sm font-medium text-ink shadow-sm hover:bg-slate-50"
-          >
-            Export CSV
-          </button>
-          <button
-            onClick={() => handleExport("pdf")}
-            className="rounded-lg bg-slate-600 px-3 py-2 text-sm font-medium text-white hover:bg-slate-600/90"
-          >
-            Export PDF
-          </button>
-        </div>
-      </header>
+return (
+  <div className="mx-auto max-w-5xl bg-black px-6 py-8 text-cyan font-body min-h-screen">
+    <header className="mb-8 flex items-center justify-between">
+      <div>
+        <h1 className="font-display text-2xl font-bold uppercase tracking-widest text-neonYellow neon-text">
+          // cyberpsychosis levels
+        </h1>
+        <p className="text-sm text-cyan/60 font-mono">
+          // last {RANGE_DAYS} days · local scan only
+        </p>
+      </div>
+      <div className="flex gap-2">
+        <button
+          onClick={() => handleExport("csv")}
+          className="rounded border border-cyan/50 px-3 py-2 text-sm font-display uppercase tracking-wide text-cyan hover:bg-cyan hover:text-black hover:shadow-neon transition"
+        >
+          // fetch csv
+        </button>
+        <button
+          onClick={() => handleExport("pdf")}
+          className="rounded border border-neonYellow px-3 py-2 text-sm font-display uppercase tracking-wide text-neonYellow hover:bg-neonYellow hover:text-black hover:shadow-neon transition"
+        >
+          // fetch pdf
+        </button>
+      </div>
+    </header>
 
       {loading ? (
         <p className="text-sm text-slate-400">Loading your data…</p>
@@ -105,7 +110,7 @@ export function DashboardApp() {
 
           <section className="card">
             <h2 className="mb-1 font-display text-sm font-semibold">Most common level this period</h2>
-            <p className="text-sm text-slate-500 capitalize">{summary.mostCommonLevel}</p>
+            <p className="text-sm text-cyan/70">{STRESS_LEVEL_LABELS[summary.mostCommonLevel]}</p>
           </section>
         </>
       )}
@@ -116,10 +121,10 @@ export function DashboardApp() {
 function StatCard({ label, value, trend }: { label: string; value: string; trend?: number | null }) {
   return (
     <div className="card">
-      <p className="text-xs uppercase tracking-wide text-slate-400">{label}</p>
-      <p className="mt-1 font-display text-2xl font-semibold">{value}</p>
+      <p className="text-xs uppercase tracking-widest text-cyan/50 font-mono">{label}</p>
+      <p className="mt-1 font-display text-2xl font-bold text-neonYellow neon-text">{value}</p>
       {trend !== undefined && trend !== null && (
-        <p className={`mt-1 text-xs ${trend > 0 ? "text-signal-elevated" : "text-signal-calm"}`}>
+        <p className={`mt-1 text-xs font-mono ${trend > 0 ? "text-crimson" : "text-cyan"}`}>
           {trend > 0 ? "+" : ""}
           {trend}% vs previous period
         </p>
