@@ -30,3 +30,10 @@ export const STRESS_LEVEL_LABELS: Record<import("./types").StressLevel, string> 
   elevated: "OVERCLOCKED",
   critical: "CYBERPSYCHO"
 };
+
+export const STRESS_LEVEL_MESSAGES: Record<import("./types").StressLevel, string> = {
+  calm: "Signal's clean. Nothing to report, choom.",
+  steady: "Baseline holding. Keep an eye on it.",
+  elevated: "Might as well take a break.",
+  critical: "You're goin cyberpsycho choom. Get off now"
+};

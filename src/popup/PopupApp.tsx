@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import type { StressLevel, TypingSession, UserSettings } from "@shared/types";
 import { sendMessage } from "@shared/messages";
-import { STRESS_LEVEL_LABELS } from "@shared/constants";
+import { STRESS_LEVEL_LABELS, STRESS_LEVEL_MESSAGES } from "@shared/constants";
 import { PopupChart } from "./popupChart";
 
 const LEVEL_STYLES: Record<StressLevel, { dot: string; bg: string }> = {
@@ -53,6 +53,7 @@ export function PopupApp() {
   const level = latest?.prediction?.level ?? "calm";
   const styles = LEVEL_STYLES[level];
   const label = STRESS_LEVEL_LABELS[level];
+  const message = STRESS_LEVEL_MESSAGES[level];
 
   return (
     <div className="flex flex-col gap-4 bg-black p-4 text-cyan font-body">
@@ -82,11 +83,12 @@ export function PopupApp() {
           <section className={`rounded-lg border border-current/30 ${styles.bg} p-4 neon-border`}>
             <div className="flex items-center gap-2">
               <span className={`h-2.5 w-2.5 rounded-full ${styles.dot} shadow-neon`} />
-              <span className="font-display text-lg font-bold uppercase tracking-wide neon-text">{label}</span>
+               <span className="font-display text-lg font-bold uppercase tracking-wide neon-text">{label}</span>
             </div>
-            <p className="mt-1 text-xs text-cyan/50 font-mono">
+            <p className="mt-1 text-xs text-cyan/70 font-mono">{message}</p>
+            <p className="mt-0.5 text-[11px] text-cyan/40 font-mono">
               {latest
-                ? `Based on your last typing session on ${latest.domain}`
+                ? `Last session: ${latest.domain}`
                 : "No sessions recorded yet — start typing on any page"}
             </p>
           </section>
@@ -117,5 +119,5 @@ export function PopupApp() {
 }
 
 function ChartSkeleton() {
-  return <div className="h-16 animate-pulse rounded-lg bg-cyan/10" />;
+  return <div className="h-16 rounded-lg bg-cyan/10" />;
 }
