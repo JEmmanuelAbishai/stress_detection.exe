@@ -4,16 +4,16 @@
   "version": "0.1.0",
   "description": "Detects typing-behavior signals of stress (dwell/flight time, backspace rate) locally in your browser and shows trends in a private dashboard.",
   "icons": {
-    "16": "icons/icon16.png",
-    "32": "icons/icon32.png",
-    "48": "icons/icon48.png",
-    "128": "icons/icon128.png"
+    "16": "icons/icon44.png",
+    "32": "icons/icon44.png",
+    "48": "icons/icon44.png",
+    "128": "icons/icon44.png"
   },
   "action": {
     "default_popup": "src/popup/popup.html",
     "default_icon": {
-      "16": "icons/icon16.png",
-      "32": "icons/icon32.png"
+      "16": "icons/icon44.png",
+      "32": "icons/icon44.png"
     }
   },
   "background": {
