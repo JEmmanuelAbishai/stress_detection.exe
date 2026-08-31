@@ -52,6 +52,7 @@ export function PopupChart({ sessions }: PopupChartProps) {
         options={{
           responsive: true,
           maintainAspectRatio: false,
+          animation: false,
           scales: {
             x: { display: false },
             y: { display: false, min: -0.3, max: 3.3 }
