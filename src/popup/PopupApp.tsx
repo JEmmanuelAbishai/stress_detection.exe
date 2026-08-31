@@ -49,11 +49,11 @@ export function PopupApp() {
   const styles = LEVEL_STYLES[level];
 
   return (
-    <div className="flex flex-col gap-4 p-4">
+    <div className="flex flex-col gap-4 bg-black p-4 text-cyan font-body">
       <header className="flex items-center justify-between">
         <div>
-          <h1 className="font-display text-sm font-semibold tracking-tight">Typing Stress Detector</h1>
-          <p className="text-xs text-slate-400">Local, on-device analysis</p>
+          <h1 className="font-display text-sm font-bold uppercase tracking-widest text-neonYellow neon-text"> Stress Detector </h1>
+          <p className="text-xs text-cyan/60 font-mono"> // local, on-device scan </p>
         </div>
         <button
           onClick={toggleDetection}
@@ -71,10 +71,10 @@ export function PopupApp() {
 
       {!error && (
         <>
-          <section className={`rounded-xl2 ${styles.bg} p-4`}>
+          <section className={`rounded-lg border border-current/30 ${styles.bg} p-4 neon-border`}>
             <div className="flex items-center gap-2">
-              <span className={`h-2.5 w-2.5 rounded-full ${styles.dot}`} />
-              <span className="font-display text-lg font-semibold">{styles.label}</span>
+              <span className={`h-2.5 w-2.5 rounded-full ${styles.dot} shadow-neon`} />
+              <span className="font-display text-lg font-bold uppercase tracking-wide neon-text">{styles.label}</span>
             </div>
             <p className="mt-1 text-xs text-slate-500">
               {latest
